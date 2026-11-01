@@ -1,0 +1,8 @@
+data/
+transform/target/
+transform/dbt_packages/
+transform/logs/
+logs/
+__pycache__/
+.pytest_cache/
+.venv/
