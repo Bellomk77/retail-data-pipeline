@@ -1,0 +1,13 @@
+version: 2
+models:
+  - name: int_order_lines
+    columns:
+      - name: product_id
+        description: Known issue - a few lines reference products missing from the catalogue export. Flagged as a warning, not a failure, so it is visible without blocking the pipeline.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+              config:
+                severity: warn

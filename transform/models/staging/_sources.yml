@@ -1,0 +1,12 @@
+version: 2
+sources:
+  - name: raw
+    description: Exports loaded as-is by ingest/load.py. Every column is text.
+    schema: raw
+    tables:
+      - name: customers
+      - name: products
+      - name: orders
+        description: Contains exact duplicate rows from re-sent exports.
+      - name: order_items
+        description: Returns are negative quantities; some lines reference products missing from the catalogue.

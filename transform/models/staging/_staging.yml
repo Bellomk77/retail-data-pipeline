@@ -1,0 +1,38 @@
+version: 2
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+      - name: email
+        data_tests: [unique, not_null]
+      - name: province
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["ON", "QC", "BC", "AB", "MB", "NS"]
+  - name: stg_orders
+    columns:
+      - name: order_id
+        description: Unique after deduplication.
+        data_tests: [unique, not_null]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["delivered", "shipped", "cancelled"]
+      - name: channel
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["web", "mobile_app", "marketplace"]
+  - name: stg_order_items
+    columns:
+      - name: order_line_id
+        data_tests: [unique, not_null]
+      - name: order_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
