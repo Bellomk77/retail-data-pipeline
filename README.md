@@ -9,6 +9,8 @@ An end-to-end **ELT pipeline** for a fictional Canadian online retailer: it load
 
 ![Monthly net revenue](docs/monthly_revenue.png)
 
+**▶ [Live demo](https://mohammed-bello-ibrahim.vercel.app/demos/retail.html)**: filter the KPI dashboard, explore cohort retention, and see the data-quality scorecard in your browser.
+
 ---
 
 ## Data quality is measured, not assumed
