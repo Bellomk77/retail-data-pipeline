@@ -5,7 +5,7 @@
 ![DuckDB](https://img.shields.io/badge/DuckDB-warehouse-yellow)
 ![Airflow](https://img.shields.io/badge/Airflow-DAG-017CEE)
 
-An end-to-end **ELT pipeline** for a fictional Canadian online retailer: it loads **59,000+ rows of deliberately messy exports**, cleans and models them with **dbt** in a **DuckDB** warehouse, enforces **24 data tests**, and publishes a report with KPIs, cohort retention, and a **data-quality scorecard**. It's orchestrated by an **Airflow DAG** and runs end to end in CI on every push.
+An end-to-end **ELT pipeline** for a fictional Canadian online retailer: it loads **59,000+ rows of deliberately messy exports**, cleans and models them with **dbt** in a **DuckDB** warehouse, enforces **25 data tests**, and publishes a report with KPIs, cohort retention, and a **data-quality scorecard**. It's orchestrated by an **Airflow DAG** and runs end to end in CI on every push.
 
 ![Monthly net revenue](docs/monthly_revenue.png)
 
@@ -41,7 +41,7 @@ flowchart LR
     end
     A -->|ingest/load.py| B --> C --> D --> E
     E --> R[Report<br/>KPIs, scorecard, charts]
-    T{{24 dbt tests}} -.-> C & D & E
+    T{{25 dbt tests}} -.-> C & D & E
     AF[Airflow DAG<br/>daily 06:00] -.orchestrates.-> A
 ```
 
@@ -54,7 +54,7 @@ flowchart LR
 
 ## Results
 
-From the latest run (the pipeline finishes end to end in about 17 seconds):
+From the latest run (the pipeline finishes end to end in under 20 seconds):
 
 - **Net revenue:** $7.38M (gross $7.72M, returns $334K) across **13,865 orders**
 - **Average order value:** $532.40 · **Repeat-customer rate:** 36.5%
@@ -66,7 +66,7 @@ The full report is regenerated on every run: [`reports/pipeline_report.md`](repo
 
 ## Testing
 
-- **24 dbt tests:** uniqueness, not-null, accepted values, relationships, plus custom tests for revenue reconciliation and impossible dates (orders before signup or in the future)
+- **25 dbt tests:** uniqueness, not-null, accepted values, relationships, plus custom tests for revenue reconciliation and impossible dates (orders before signup or in the future)
 - **6 end-to-end pytest tests:** every injected issue detected, no duplicate orders reach the marts, revenue reconciles to raw, cancelled orders carry no revenue, cohort month 0 is 100%, and **re-running the incremental model is idempotent**
 - **CI** runs the whole pipeline and all tests on every push and on a weekly schedule, and publishes the report to the run summary
 
